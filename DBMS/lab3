@@ -1,0 +1,81 @@
+create database lab3;
+use lab3;
+
+#creating tables and inserting values
+create table emp(
+empno int primary key,
+ename varchar(20),
+job varchar(20),
+mgr int not null,
+hiredate date,
+sal int,
+comm int,
+deptno int
+);
+
+create table dept(
+deptno int primary key,
+dname varchar(20),
+loc varchar(20)
+);
+
+alter table emp 
+add foreign key(deptno) references dept(deptno);
+
+insert into dept
+values
+(10,'accounting','new york'),
+(20,'research','dallas'),
+(30,'sales','chicago'),
+(40,'operations','boston');
+
+insert into emp 
+values
+(7369,'smith','clerk',7902,'1980-12-17',800,300,20),
+(7499,'allen','salesman',7698,'1981-02-20',1600,300,30);
+
+#Write a query in SQL to display the unique designations for the employees.
+select distinct(job) from emp;
+
+#Delete Employees who joined in Year 1980.
+delete from emp 
+where year(hiredate)=1980;
+
+#undoing the delete function
+insert into emp 
+values
+(7369,'smith','clerk',7902,'1980-12-17',800,300,20);
+select * from emp;
+
+#Increase the salary of Managers by 20% of their current salary.
+update emp
+set sal=sal*0.2;
+
+#List employees not belonging to department 30, 40, or 10.
+select * from emp
+where
+deptno not in (30,40,10);
+
+#List employees whose names either start or end with “S”.
+select * from emp
+where
+ename like 's%' or'%s';
+
+#List employees whose names have letter “A” as second letter” in their names.
+select * from emp
+where
+ename like '_a%';
+
+#List the number of employees working with the company.
+select count(empno)
+from emp;
+
+#List the emps with hiredate in format June 4,1988.
+select * from emp
+where
+hiredate='1988-06-04';
+
+#List the salesmen who get the commission within a range of 200 and 500.
+select * from emp
+where
+job='salesman' and (comm between 200 and 500);
