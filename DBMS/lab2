@@ -1,1 +1,75 @@
+show databases;
+create database lab2;
+use lab2;
 
+#creating tables with all constraints
+create table project(project_id int primary key,
+project_name varchar(20),
+chief_arch varchar(20)
+);
+
+create table employee(emp_id int primary key,
+emp_name varchar(20)
+);
+
+create table assigned_to(project_id int,
+emp_id int,
+primary key(project_id,emp_id)
+);
+
+#Inserting values in table
+insert into project 
+values
+(100,'project1','Ridham'),
+(101,'project2','Anuj'),
+(102,'project3','Mayank');
+
+insert into employee 
+values
+(600,'Ridham'),
+(601,'Anuj'),
+(602,'Mayank');
+
+insert into assigned_to 
+values
+(100,600),
+(101,602),
+(102,601);
+
+#truncate table
+truncate table assigned_to;
+select * from assigned_to;
+
+#drop table
+drop table assigned_to;
+
+#alter table add column
+alter table employee add extra_column varchar(20);
+select * from employee;
+
+#alter table drop column
+alter table employee drop extra_column;
+select * from employee;
+
+#adding constraints
+alter table project add constraint constraint1 unique (project_id);
+
+#DROPPING constraints
+alter table project drop constraint constraint1;
+
+#modify data type and length of column
+alter table project modify column project_name varchar(25);
+
+#rename table,column
+rename table project to project1;
+alter table project1 rename column project_name to projectname;
+select * from project1;
+
+#create user
+create user 'ridham'@'localhost';
+
+#grant all privileges
+GRANT ALL PRIVILEGES ON lab2.* To 'ridham'@'localhost';
+
+#revoke all privileges
+REVOKE ALL,grant option from 'ridham'@'localhost';
